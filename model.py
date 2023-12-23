@@ -33,15 +33,6 @@ class RNN:
         input_time = np.linspace(0, duration_ms, int(duration_ms * sampling_rate), endpoint=False)
         input_amplitude = np.random.uniform(-1, 1, len(input_time))
         return input_time, input_amplitude
-
-    def periodic_kernel(self, t1, t2, tau_target):
-        return np.exp(-2 * np.sin(np.pi * np.abs(t1 - t2) / tau_target)**2)
-
-    def sample_from_gp(self, t, tau_target, num_samples):
-        t_grid = np.arange(0.0, 4000, 1)
-        cov_matrix = self.periodic_kernel(t_grid[:, None], t_grid[:, None].T, tau_target)
-        samples = np.random.multivariate_normal(mean=np.zeros_like(t_grid), cov=cov_matrix, size=num_samples)
-        return t_grid, samples
     
     def error(self, V_target, V):
         return (V_target - V)

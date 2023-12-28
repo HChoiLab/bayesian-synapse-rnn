@@ -39,12 +39,12 @@ class RNN:
 
     def forward_pass(self, t, input_time, input_amplitude): 
         
-        if t >= len(input_time) + 200:
+        if t >= len(input_time):
             input = 0
-        elif t < 200:
+        elif t < 0:
             input = 0
         else:
-            input = input_amplitude[t-200]
+            input = input_amplitude[t]
         self.V = self.V + self.dt * (-self.V + np.dot(self.J, np.tanh(self.V)) + self.A * self.V + input) / self.tau_m
         out = np.dot(self.w, self.V)
         return out
